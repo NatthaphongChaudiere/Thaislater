@@ -1,21 +1,23 @@
 package com.example.thaislater
 
 import android.annotation.SuppressLint
-import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.graphics.toColorInt
+import com.airbnb.lottie.LottieAnimationView
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.MediaType.Companion.toMediaType
@@ -25,10 +27,9 @@ import okhttp3.RequestBody
 import okhttp3.Response
 import org.json.JSONObject
 import java.io.IOException
-import com.airbnb.lottie.LottieAnimationView
-import kotlin.reflect.typeOf
 
-class MainActivity : AppCompatActivity() {
+class MainActivity2 : AppCompatActivity() {
+
     private lateinit var lottie_loading_activities: LottieAnimationView
     private val client = OkHttpClient.Builder()
         .connectTimeout(30, java.util.concurrent.TimeUnit.SECONDS) // wait longer to connect
@@ -39,22 +40,31 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main2)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        val intent: Intent = getIntent()
+        val id = intent.getIntExtra("User_ID", 0)
+        val username = intent.getStringExtra("Username")?: "Guest"
+        val date_created = intent.getStringExtra("Date_Created")?: "Unknown"
+        val time_created = intent.getStringExtra("Time_Created")?: "Unknown"
+
+        Log.d("User Information", "$id")
+        Log.d("User Information", "$username")
+        Log.d("User Information", "$date_created")
+        Log.d("User Information", "$time_created")
 
         lottie_loading_activities = findViewById(R.id.lottie_loading_activities)
-        val startButton = findViewById<LinearLayout>(R.id.start_button)
+        val generateButton = findViewById<LinearLayout>(R.id.generate_button)
+        onTouch_generateButton(generateButton)
 
-        onTouch_startButton(startButton)
     }
     @SuppressLint("ClickableViewAccessibility")
-    fun onTouch_startButton(button: LinearLayout) {
+    fun onTouch_generateButton(button: LinearLayout) {
         button.setOnTouchListener { view, motionEvent ->
-            // Access the shape drawable from background
             val drawable = view.background
             if (drawable is GradientDrawable) {
                 when (motionEvent.action) {
@@ -67,7 +77,7 @@ class MainActivity : AppCompatActivity() {
                             .start()
 
                         // Set background color to green
-                        drawable.setColor("#4CAF50".toColorInt()) // green
+                        drawable.setColor("#9370DB".toColorInt()) // purple
                     }
 
                     MotionEvent.ACTION_UP -> {
@@ -102,13 +112,30 @@ class MainActivity : AppCompatActivity() {
         }
 
         button.setOnClickListener {
-            val username = findViewById<EditText>(R.id.username_field).text.toString()
-            if (username.isNullOrBlank()) {
-                Toast.makeText(this, "Please enter username...", Toast.LENGTH_SHORT).show()
+            // UI Session
+            val translate_pronounciation_layout = findViewById<LinearLayout>(R.id.translate_pronounciation_layout)
+            val original_text = findViewById<TextView>(R.id.original_text)
+            val original_thai_text = findViewById<TextView>(R.id.original_thai_text)
+            val pronounciation = findViewById<TextView>(R.id.pronounciation)
+
+            val thai_cultural_note_header = findViewById<TextView>(R.id.thai_cultural_note_header)
+
+            val thai_cultural_note_layout = findViewById<LinearLayout>(R.id.thai_cultural_note_layout)
+            val cultural_text = findViewById<TextView>(R.id.cultural)
+
+
+            val prompt = findViewById<EditText>(R.id.prompt_field).text.toString()
+            if (prompt.isNullOrBlank()) {
+                Toast.makeText(this, "Please enter prompt...", Toast.LENGTH_SHORT).show()
             }
             else {
+
+                translate_pronounciation_layout.visibility = View.GONE
+                thai_cultural_note_header.visibility = View.GONE
+                thai_cultural_note_layout.visibility = View.GONE
+
                 val jsonBody = JSONObject()
-                jsonBody.put("username", username)
+                jsonBody.put("phrase", prompt)
 
                 val requestBody = RequestBody.create(
                     "application/json; charset=utf-8".toMediaType(),
@@ -116,7 +143,7 @@ class MainActivity : AppCompatActivity() {
                 )
 
                 val request = Request.Builder()
-                    .url("http://10.0.2.2:5000/create-user")
+                    .url("http://10.0.2.2:5000/cultural_note")
                     .post(requestBody)
                     .build()
 
@@ -135,46 +162,25 @@ class MainActivity : AppCompatActivity() {
                             lottie_loading_activities.visibility = View.GONE
                             val resString = response.body?.string()
                             Log.d("FlaskAPI_EncodeJSON", "$resString")
-                            extract_user_data(resString)
+                            enableUI(resString)
                         }
                     }
 
-                    fun extract_user_data(resString: String?) {
-                        try {
-                            val json = JSONObject(resString)
+                    fun enableUI(resString: String?) {
+                        val response = JSONObject(resString)
+                        original_text.text = "Original Text: " + response.getString("Original")
+                        original_thai_text.text = "Original Thai Text: " + response.getString("Original-Thai")
+                        pronounciation.text = "Pronounciation: " + response.getString("Pronounciation")
 
-                            val userInfoArray = json.getJSONArray("User Info")
-                            val userInfo = userInfoArray.getJSONObject(0)
+                        cultural_text.text = response.getString("Thai Cultural Note")
 
-                            val id = userInfo.getInt("id")
-                            val username = userInfo.getString("username")
-                            val date_created = userInfo.getString("date")
-                            val time_created = userInfo.getString("time")
-
-                            Log.d("ParsedJSON", "User ID: $id")
-                            Log.d("ParsedJSON", "Username: $username")
-                            Log.d("ParsedJSON", "Date Created At: $date_created")
-                            Log.d("ParsedJSON", "Time Created At: $time_created")
-
-                            change_activity(id, username, date_created, time_created)
-
-                        } catch (e: Exception) {
-                            Log.e("JSONError", "Parsing failed: ${e.message}")
-                        }
-                    }
-
-                    fun change_activity(id: Int, username: String, date: String, time: String) {
-                        val intent: Intent = Intent(this@MainActivity, MainActivity2::class.java)
-                        intent.putExtra("User_ID", id)
-                        intent.putExtra("Username", username)
-                        intent.putExtra("Date_Created", date)
-                        intent.putExtra("Time_Created", time)
-                        startActivity(intent)
+                        translate_pronounciation_layout.visibility = View.VISIBLE
+                        thai_cultural_note_header.visibility = View.VISIBLE
+                        thai_cultural_note_layout.visibility = View.VISIBLE
                     }
 
                 })
             }
         }
     }
-
 }

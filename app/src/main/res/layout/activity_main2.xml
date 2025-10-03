@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity2">
+
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        android:orientation="vertical"
+        android:background="@color/cream"
+        app:layout_constraintTop_toTopOf="@id/main"
+        app:layout_constraintStart_toStartOf="@id/main"
+        app:layout_constraintEnd_toEndOf="@id/main">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/thaislaterlogo">
+
+        </ImageView>
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/prompt_field"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:paddingLeft="25dp"
+        android:textSize="20dp"
+        android:drawableStart="@drawable/query_search_icon"
+        android:drawablePadding="15dp"
+        android:clipToOutline="false"
+        android:hint="Enter Phrase"
+        android:background="@drawable/sign_in_border"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintStart_toStartOf="@id/main"
+        app:layout_constraintEnd_toEndOf="@id/main">
+    </EditText>
+
+    <LinearLayout
+        android:id="@+id/generate_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/sign_in_border"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@id/prompt_field"
+        app:layout_constraintStart_toStartOf="@id/main"
+        app:layout_constraintEnd_toEndOf="@id/main">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/knightwarrior"
+            android:textSize="20sp"
+            android:padding="15dp"
+            android:text="Let cast some magic!">
+        </TextView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/translate_pronounciation_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/sign_in_border"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/generate_button"
+        app:layout_constraintStart_toStartOf="@id/main"
+        app:layout_constraintEnd_toEndOf="@id/main">
+
+        <TextView
+            android:id="@+id/original_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:fontFamily="serif"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:text="Original Text: ">
+        </TextView>
+
+        <TextView
+            android:id="@+id/original_thai_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:fontFamily="serif"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:text="Original Thai Text: ">
+        </TextView>
+
+        <TextView
+            android:id="@+id/pronounciation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:fontFamily="serif"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:text="Pronounciation: ">
+        </TextView>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/thai_cultural_note_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Thai Cultural Note"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:fontFamily="@font/knightwarrior"
+        android:textSize="20sp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/translate_pronounciation_layout"
+        app:layout_constraintStart_toStartOf="@id/main">
+
+    </TextView>
+
+    <LinearLayout
+        android:id="@+id/thai_cultural_note_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:visibility="gone"
+        android:background="@drawable/sign_in_border"
+        app:layout_constraintTop_toBottomOf="@+id/thai_cultural_note_header"
+        app:layout_constraintStart_toStartOf="@id/main"
+        app:layout_constraintBottom_toTopOf="@id/footer"
+        app:layout_constraintEnd_toEndOf="@id/main">
+
+        <TextView
+            android:id="@+id/cultural"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:fontFamily="serif"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:text="Thai Cultural Note: ">
+        </TextView>
+
+    </LinearLayout>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie_loading_activities"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:visibility="gone"
+        android:layout_marginTop="50dp"
+        app:layout_constraintTop_toBottomOf="@+id/generate_button"
+        app:layout_constraintStart_toStartOf="@id/main"
+        app:layout_constraintEnd_toEndOf="@+id/main"
+        app:lottie_rawRes="@raw/loading_ai_generate"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true">
+
+    </com.airbnb.lottie.LottieAnimationView>
+
+    <LinearLayout
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:background="@color/cream"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@id/main"
+        app:layout_constraintStart_toStartOf="@id/main"
+        app:layout_constraintEnd_toEndOf="@id/main">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_margin="15dp">
+
+            <ImageView
+                android:id="@+id/favorite_navigation"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/bookmark">
+            </ImageView>
+
+            <ImageView
+                android:id="@+id/home_navigation"
+                android:layout_width="50dp"
+                android:layout_marginStart="50dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/home">
+            </ImageView>
+
+            <ImageView
+                android:id="@+id/quiz_navigation"
+                android:layout_width="50dp"
+                android:layout_marginStart="50dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/quiz">
+            </ImageView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
