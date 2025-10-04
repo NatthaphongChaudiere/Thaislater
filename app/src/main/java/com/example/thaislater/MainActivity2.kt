@@ -13,6 +13,7 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -31,6 +32,10 @@ import java.io.IOException
 class MainActivity2 : AppCompatActivity() {
 
     private lateinit var lottie_loading_activities: LottieAnimationView
+    private var user_id: Int? = null
+    private lateinit var username: String
+    private lateinit var date_created: String
+    private lateinit var time_created: String
     private val client = OkHttpClient.Builder()
         .connectTimeout(30, java.util.concurrent.TimeUnit.SECONDS) // wait longer to connect
         .readTimeout(60, java.util.concurrent.TimeUnit.SECONDS)    // wait longer for server response
@@ -47,12 +52,12 @@ class MainActivity2 : AppCompatActivity() {
             insets
         }
         val intent: Intent = getIntent()
-        val id = intent.getIntExtra("User_ID", 0)
-        val username = intent.getStringExtra("Username")?: "Guest"
-        val date_created = intent.getStringExtra("Date_Created")?: "Unknown"
-        val time_created = intent.getStringExtra("Time_Created")?: "Unknown"
+        user_id = intent.getIntExtra("User_ID", 0)
+        username = intent.getStringExtra("Username")?: "Guest"
+        date_created = intent.getStringExtra("Date_Created")?: "Unknown"
+        time_created = intent.getStringExtra("Time_Created")?: "Unknown"
 
-        Log.d("User Information", "$id")
+        Log.d("User Information", "$user_id")
         Log.d("User Information", "$username")
         Log.d("User Information", "$date_created")
         Log.d("User Information", "$time_created")
@@ -123,6 +128,11 @@ class MainActivity2 : AppCompatActivity() {
             val thai_cultural_note_layout = findViewById<LinearLayout>(R.id.thai_cultural_note_layout)
             val cultural_text = findViewById<TextView>(R.id.cultural)
 
+            val favoriteButton = findViewById<ImageButton>(R.id.favoriteButton)
+            var favorite_state = false
+
+            var current_favorite_id = 0
+
 
             val prompt = findViewById<EditText>(R.id.prompt_field).text.toString()
             if (prompt.isNullOrBlank()) {
@@ -133,6 +143,8 @@ class MainActivity2 : AppCompatActivity() {
                 translate_pronounciation_layout.visibility = View.GONE
                 thai_cultural_note_header.visibility = View.GONE
                 thai_cultural_note_layout.visibility = View.GONE
+                favoriteButton.visibility = View.GONE
+
 
                 val jsonBody = JSONObject()
                 jsonBody.put("phrase", prompt)
@@ -177,8 +189,85 @@ class MainActivity2 : AppCompatActivity() {
                         translate_pronounciation_layout.visibility = View.VISIBLE
                         thai_cultural_note_header.visibility = View.VISIBLE
                         thai_cultural_note_layout.visibility = View.VISIBLE
+                        favoriteButton.visibility = View.VISIBLE
+
+                        favoriteButton.setOnClickListener {
+                            favoriteCurrent(response)
+                        }
                     }
 
+                    fun favoriteCurrent(response: JSONObject?){
+                        if (!favorite_state) {
+                            favoriteButton.setBackgroundResource(R.drawable.favourite)
+                            favorite_state = true
+
+                            val jsonBody = JSONObject()
+                            jsonBody.put("user_id", user_id)
+                            jsonBody.put("original_text", response?.getString("Original"))
+                            jsonBody.put("original_thai_text", response?.getString("Original-Thai"))
+                            jsonBody.put("pronounciation", response?.getString("Pronounciation"))
+                            jsonBody.put("cultural_text", response?.getString("Thai Cultural Note"))
+
+                            val requestBody = RequestBody.create(
+                                "application/json; charset=utf-8".toMediaType(),
+                                jsonBody.toString()
+                            )
+
+                            val request = Request.Builder()
+                                .url("http://10.0.2.2:5000/create-favorite")
+                                .post(requestBody)
+                                .build()
+
+                            client.newCall(request).enqueue(object : Callback {
+                                override fun onFailure(call: Call, e: IOException) {
+                                    runOnUiThread {
+                                        Log.e("FlaskAPI_FailedReport", "Failed: ${e.message}")
+                                    }
+                                }
+
+                                override fun onResponse(call: Call, response: Response) {
+                                    runOnUiThread {
+                                        val resString = response.body?.string()
+                                        val response = JSONObject(resString)
+                                        current_favorite_id = response.getInt("id")
+                                        Log.d("FlaskAPI_EncodeJSON", "$resString")
+                                    }
+                                }
+                            })
+                        }
+                        else {
+                            favoriteButton.setBackgroundResource(R.drawable.unfavourite)
+                            favorite_state = false
+
+                            val jsonBody = JSONObject()
+                            jsonBody.put("current_favorite_id", current_favorite_id)
+
+                            val requestBody = RequestBody.create(
+                                "application/json; charset=utf-8".toMediaType(),
+                                jsonBody.toString()
+                            )
+
+                            val request = Request.Builder()
+                                .url("http://10.0.2.2:5000/delete-favorite")
+                                .post(requestBody)
+                                .build()
+
+                            client.newCall(request).enqueue(object : Callback {
+                                override fun onFailure(call: Call, e: IOException) {
+                                    runOnUiThread {
+                                        Log.e("FlaskAPI_FailedReport", "Failed: ${e.message}")
+                                    }
+                                }
+
+                                override fun onResponse(call: Call, response: Response) {
+                                    runOnUiThread {
+                                        val resString = response.body?.string()
+                                        Log.d("FlaskAPI_EncodeJSON", "$resString")
+                                    }
+                                }
+                            })
+                        }
+                    }
                 })
             }
         }

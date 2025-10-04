@@ -129,20 +129,31 @@
         app:layout_constraintStart_toStartOf="@id/main">
 
     </TextView>
+    
+    <ImageButton
+        android:id="@+id/favoriteButton"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginStart="15dp"
+        android:background="@drawable/unfavourite"
+        android:visibility="gone"
+        app:layout_constraintStart_toEndOf="@id/thai_cultural_note_header"
+        app:layout_constraintTop_toBottomOf="@id/translate_pronounciation_layout">
+    </ImageButton>
 
     <LinearLayout
         android:id="@+id/thai_cultural_note_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="15dp"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
         android:visibility="gone"
         android:background="@drawable/sign_in_border"
         app:layout_constraintTop_toBottomOf="@+id/thai_cultural_note_header"
         app:layout_constraintStart_toStartOf="@id/main"
-        app:layout_constraintBottom_toTopOf="@id/footer"
         app:layout_constraintEnd_toEndOf="@id/main">
 
         <TextView
