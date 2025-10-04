@@ -143,6 +143,8 @@ class MainActivity2 : AppCompatActivity() {
                 translate_pronounciation_layout.visibility = View.GONE
                 thai_cultural_note_header.visibility = View.GONE
                 thai_cultural_note_layout.visibility = View.GONE
+
+                favoriteButton.setBackgroundResource(R.drawable.unfavourite)
                 favoriteButton.visibility = View.GONE
 
 
