@@ -15,9 +15,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Thaislater">
         <activity
-            android:name=".MainActivity2"
+            android:name=".MainActivity3"
             android:exported="false" />
-        <!-- SplashActivity is the launcher activity -->
+        <activity
+            android:name=".MainActivity2"
+            android:exported="false" /> <!-- SplashActivity is the launcher activity -->
         <activity
             android:name=".SplashActivity"
             android:exported="true">

@@ -200,28 +200,28 @@
             android:orientation="horizontal"
             android:layout_margin="15dp">
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/favorite_navigation"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:src="@drawable/bookmark">
-            </ImageView>
+                android:background="@drawable/bookmark">
+            </ImageButton>
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/home_navigation"
                 android:layout_width="50dp"
                 android:layout_marginStart="50dp"
                 android:layout_height="match_parent"
-                android:src="@drawable/home">
-            </ImageView>
+                android:background="@drawable/home">
+            </ImageButton>
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/quiz_navigation"
                 android:layout_width="50dp"
                 android:layout_marginStart="50dp"
                 android:layout_height="match_parent"
-                android:src="@drawable/quiz">
-            </ImageView>
+                android:background="@drawable/quiz">
+            </ImageButton>
 
         </LinearLayout>
 

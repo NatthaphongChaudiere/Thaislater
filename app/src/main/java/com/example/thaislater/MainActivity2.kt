@@ -64,7 +64,9 @@ class MainActivity2 : AppCompatActivity() {
 
         lottie_loading_activities = findViewById(R.id.lottie_loading_activities)
         val generateButton = findViewById<LinearLayout>(R.id.generate_button)
+        val favnavButton = findViewById<ImageButton>(R.id.favorite_navigation)
         onTouch_generateButton(generateButton)
+        onTouch_navigation(favnavButton)
 
     }
     @SuppressLint("ClickableViewAccessibility")
@@ -272,6 +274,13 @@ class MainActivity2 : AppCompatActivity() {
                     }
                 })
             }
+        }
+    }
+
+    fun onTouch_navigation(button : ImageButton) {
+        button.setOnClickListener {
+            val button_id = button.id
+            Log.d("What is Button ID", button_id.toString())
         }
     }
 }
