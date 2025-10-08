@@ -202,6 +202,7 @@
 
             <ImageButton
                 android:id="@+id/favorite_navigation"
+                android:contentDescription="favorite"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/bookmark">
@@ -209,6 +210,7 @@
 
             <ImageButton
                 android:id="@+id/home_navigation"
+                android:contentDescription="home"
                 android:layout_width="50dp"
                 android:layout_marginStart="50dp"
                 android:layout_height="match_parent"
@@ -217,6 +219,7 @@
 
             <ImageButton
                 android:id="@+id/quiz_navigation"
+                android:contentDescription="quiz"
                 android:layout_width="50dp"
                 android:layout_marginStart="50dp"
                 android:layout_height="match_parent"

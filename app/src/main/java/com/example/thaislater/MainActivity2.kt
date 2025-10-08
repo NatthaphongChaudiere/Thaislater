@@ -279,8 +279,12 @@ class MainActivity2 : AppCompatActivity() {
 
     fun onTouch_navigation(button : ImageButton) {
         button.setOnClickListener {
-            val button_id = button.id
-            Log.d("What is Button ID", button_id.toString())
+            val buttonContent = button.contentDescription.toString()
+            val intent : Intent = Intent(this@MainActivity2, MainActivity3::class.java)
+            intent.putExtra("User_ID", user_id)
+            when (buttonContent) {
+                "favorite" -> startActivity(intent)
+            }
         }
     }
 }

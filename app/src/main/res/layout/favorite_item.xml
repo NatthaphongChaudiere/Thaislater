@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="@drawable/sign_in_border"
+    android:layout_marginBottom="8dp">
+
+    <TextView
+        android:id="@+id/FrameID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Frame ID"
+        android:visibility="gone"
+        android:textStyle="bold"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/Original"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Original Text: "
+        android:textStyle="bold"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/Original_Thai"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="สวัสดีครับ"
+        android:textColor="#555"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/Pronounciation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="สวัสดีครับ"
+        android:textColor="#777"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/Added_Date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="2025-10-08"
+        android:textColor="#777"
+        android:textSize="12sp"/>
+
+    <TextView
+        android:id="@+id/Added_Time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="14:10:35"
+        android:textColor="#777"
+        android:textSize="12sp"/>
+
+    <ImageButton
+        android:id="@+id/favoriteButton"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/favourite">
+    </ImageButton>
+
+</LinearLayout>
