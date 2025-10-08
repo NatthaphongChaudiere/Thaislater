@@ -46,14 +46,16 @@ class MainActivity3 : AppCompatActivity() {
         }
         val user_favorite_title = findViewById<TextView>(R.id.user_fav_header)
         val home_navigation = findViewById<ImageButton>(R.id.home_navigation)
+        val user_setting = findViewById<ImageButton>(R.id.user_setting_navigation)
         val intent : Intent = getIntent()
 
         user_id = intent.getIntExtra("User_ID", 0)
         username = intent.getStringExtra("Username") ?: "Guest"
-        date_created = intent.getStringExtra("Date Created") ?: "No Date"
-        time_created = intent.getStringExtra("Time Created") ?: "No Time"
+        date_created = intent.getStringExtra("Date_Created") ?: "No Date"
+        time_created = intent.getStringExtra("Time_Created") ?: "No Time"
 
         user_favorite_title.text = "$username's Favorites"
+        onTouch_navigation(user_setting)
         onTouch_navigation(home_navigation)
         checkuser_favorites(user_id)
     }
@@ -151,17 +153,23 @@ class MainActivity3 : AppCompatActivity() {
 
         })
     }
-
     fun onTouch_navigation(button : ImageButton) {
         button.setOnClickListener {
             val buttonContent = button.contentDescription.toString()
-            val intent : Intent = Intent(this@MainActivity3, MainActivity2::class.java)
-            intent.putExtra("User_ID", user_id)
-            intent.putExtra("Username", username)
-            intent.putExtra("Date_Created", date_created)
-            intent.putExtra("Time_Created", time_created)
-            when (buttonContent) {
-                "home" -> startActivity(intent)
+
+            val targetIntent = when (buttonContent) {
+                "home" -> Intent(this@MainActivity3, MainActivity2::class.java)
+                "user_setting" -> Intent(this@MainActivity3, MainActivity4::class.java)
+                else -> null
+            }
+
+            targetIntent?.let {
+                it.putExtra("User_ID", user_id)
+                it.putExtra("Username", username)
+                it.putExtra("Date_Created", date_created)
+                it.putExtra("Time_Created", time_created)
+
+                startActivity(it)
             }
         }
     }

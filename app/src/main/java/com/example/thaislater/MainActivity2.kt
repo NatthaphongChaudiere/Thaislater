@@ -65,8 +65,10 @@ class MainActivity2 : AppCompatActivity() {
         lottie_loading_activities = findViewById(R.id.lottie_loading_activities)
         val generateButton = findViewById<LinearLayout>(R.id.generate_button)
         val favnavButton = findViewById<ImageButton>(R.id.favorite_navigation)
+        val user_setting = findViewById<ImageButton>(R.id.user_setting_navigation)
         onTouch_generateButton(generateButton)
         onTouch_navigation(favnavButton)
+        onTouch_navigation(user_setting)
 
     }
     @SuppressLint("ClickableViewAccessibility")
@@ -282,13 +284,20 @@ class MainActivity2 : AppCompatActivity() {
     fun onTouch_navigation(button : ImageButton) {
         button.setOnClickListener {
             val buttonContent = button.contentDescription.toString()
-            val intent : Intent = Intent(this@MainActivity2, MainActivity3::class.java)
-            intent.putExtra("User_ID", user_id)
-            intent.putExtra("Username", username)
-            intent.putExtra("Date Created", date_created)
-            intent.putExtra("Time Created", time_created)
-            when (buttonContent) {
-                "favorite" -> startActivity(intent)
+
+            val targetIntent = when (buttonContent) {
+                "favorite" -> Intent(this@MainActivity2, MainActivity3::class.java)
+                "user_setting" -> Intent(this@MainActivity2, MainActivity4::class.java)
+                else -> null
+            }
+
+            targetIntent?.let {
+                it.putExtra("User_ID", user_id)
+                it.putExtra("Username", username)
+                it.putExtra("Date_Created", date_created)
+                it.putExtra("Time_Created", time_created)
+
+                startActivity(it)
             }
         }
     }

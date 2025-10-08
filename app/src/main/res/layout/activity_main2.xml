@@ -344,8 +344,8 @@
             </ImageButton>
 
             <ImageButton
-                android:id="@+id/quiz_navigation"
-                android:contentDescription="user setting"
+                android:id="@+id/user_setting_navigation"
+                android:contentDescription="user_setting"
                 android:layout_width="50dp"
                 android:layout_marginStart="75dp"
                 android:layout_height="match_parent"
