@@ -5,15 +5,20 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cream"
+    android:background="@color/grey"
     tools:context=".MainActivity">
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:src="@drawable/thaislaterlogo"
-        android:scaleType="fitCenter"
+        android:layout_width="410dp"
+        android:layout_height="292dp"
+        android:layout_marginTop="28dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_full_logo"
+        app:layout_constraintBottom_toTopOf="@+id/sign_in"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
     </ImageView>
 
     <LinearLayout
@@ -30,7 +35,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/knightwarrior"
+            android:fontFamily="sans-serif-medium"
             android:text="We want to know you more!"
             android:textSize="20dp"
             android:layout_margin="20dp"
@@ -66,13 +71,14 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/knightwarrior"
-            android:textSize="35sp"
+            android:layout_height="55dp"
             android:drawableStart="@drawable/baseline_start_24"
             android:drawablePadding="10dp"
+            android:fontFamily="sans-serif-medium"
             android:padding="15sp"
-            android:text="Let's get start...">
+            android:text="Let's get start"
+            android:textSize="20sp">
+
         </TextView>
 
     </LinearLayout>

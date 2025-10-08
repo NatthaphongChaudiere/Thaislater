@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/grey"
     tools:context=".MainActivity3">
 
     <LinearLayout
@@ -12,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="125dp"
         android:orientation="vertical"
-        android:background="@color/cream"
+        android:background="@color/white"
         app:layout_constraintTop_toTopOf="@id/main"
         app:layout_constraintStart_toStartOf="@id/main"
         app:layout_constraintEnd_toEndOf="@id/main">
@@ -20,7 +21,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/thaislaterlogo">
+            android:src="@drawable/ic_full_logo">
 
         </ImageView>
 
@@ -32,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:text="User's Favorites"
-        android:fontFamily="@font/knightwarrior"
+        android:fontFamily="sans-serif-medium"
         android:textSize="20sp"
         app:layout_constraintTop_toBottomOf="@+id/header"
         app:layout_constraintStart_toStartOf="@id/main">
@@ -60,7 +61,7 @@
         android:id="@+id/footer"
         android:layout_width="match_parent"
         android:layout_height="75dp"
-        android:background="@color/cream"
+        android:background="@color/white"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="@id/main"
         app:layout_constraintStart_toStartOf="@id/main"
@@ -84,18 +85,18 @@
                 android:id="@+id/home_navigation"
                 android:contentDescription="home"
                 android:layout_width="50dp"
-                android:layout_marginStart="50dp"
+                android:layout_marginStart="75dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/home">
             </ImageButton>
 
             <ImageButton
                 android:id="@+id/quiz_navigation"
-                android:contentDescription="quiz"
+                android:contentDescription="user setting"
                 android:layout_width="50dp"
-                android:layout_marginStart="50dp"
+                android:layout_marginStart="75dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/quiz">
+                android:background="@drawable/user">
             </ImageButton>
 
         </LinearLayout>

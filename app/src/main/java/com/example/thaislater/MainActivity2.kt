@@ -124,6 +124,7 @@ class MainActivity2 : AppCompatActivity() {
             val original_text = findViewById<TextView>(R.id.original_text)
             val original_thai_text = findViewById<TextView>(R.id.original_thai_text)
             val pronounciation = findViewById<TextView>(R.id.pronounciation)
+            val daily_travel_slang = findViewById<LinearLayout>(R.id.daily_travel_slang)
 
             val thai_cultural_note_header = findViewById<TextView>(R.id.thai_cultural_note_header)
 
@@ -148,6 +149,8 @@ class MainActivity2 : AppCompatActivity() {
 
                 favoriteButton.setBackgroundResource(R.drawable.unfavourite)
                 favoriteButton.visibility = View.GONE
+
+                daily_travel_slang.visibility = View.GONE
 
 
                 val jsonBody = JSONObject()
@@ -282,6 +285,8 @@ class MainActivity2 : AppCompatActivity() {
             val intent : Intent = Intent(this@MainActivity2, MainActivity3::class.java)
             intent.putExtra("User_ID", user_id)
             intent.putExtra("Username", username)
+            intent.putExtra("Date Created", date_created)
+            intent.putExtra("Time Created", time_created)
             when (buttonContent) {
                 "favorite" -> startActivity(intent)
             }

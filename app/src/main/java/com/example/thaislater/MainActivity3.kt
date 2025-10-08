@@ -26,6 +26,9 @@ import java.io.IOException
 class MainActivity3 : AppCompatActivity() {
 
     private var user_id: Int? = null
+    private lateinit var username: String
+    private lateinit var date_created: String
+    private lateinit var time_created: String
     private val client = OkHttpClient.Builder()
         .connectTimeout(30, java.util.concurrent.TimeUnit.SECONDS) // wait longer to connect
         .readTimeout(60, java.util.concurrent.TimeUnit.SECONDS)    // wait longer for server response
@@ -42,10 +45,16 @@ class MainActivity3 : AppCompatActivity() {
             insets
         }
         val user_favorite_title = findViewById<TextView>(R.id.user_fav_header)
+        val home_navigation = findViewById<ImageButton>(R.id.home_navigation)
         val intent : Intent = getIntent()
-        val username = intent.getStringExtra("Username")
-        user_favorite_title.text = "$username's Favorites"
+
         user_id = intent.getIntExtra("User_ID", 0)
+        username = intent.getStringExtra("Username") ?: "Guest"
+        date_created = intent.getStringExtra("Date Created") ?: "No Date"
+        time_created = intent.getStringExtra("Time Created") ?: "No Time"
+
+        user_favorite_title.text = "$username's Favorites"
+        onTouch_navigation(home_navigation)
         checkuser_favorites(user_id)
     }
 
@@ -141,5 +150,19 @@ class MainActivity3 : AppCompatActivity() {
             }
 
         })
+    }
+
+    fun onTouch_navigation(button : ImageButton) {
+        button.setOnClickListener {
+            val buttonContent = button.contentDescription.toString()
+            val intent : Intent = Intent(this@MainActivity3, MainActivity2::class.java)
+            intent.putExtra("User_ID", user_id)
+            intent.putExtra("Username", username)
+            intent.putExtra("Date_Created", date_created)
+            intent.putExtra("Time_Created", time_created)
+            when (buttonContent) {
+                "home" -> startActivity(intent)
+            }
+        }
     }
 }
