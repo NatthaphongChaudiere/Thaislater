@@ -8,6 +8,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import android.content.Intent
 import android.util.Log
+import android.view.View
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -40,7 +41,10 @@ class MainActivity3 : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        val user_favorite_title = findViewById<TextView>(R.id.user_fav_header)
         val intent : Intent = getIntent()
+        val username = intent.getStringExtra("Username")
+        user_favorite_title.text = "$username's Favorites"
         user_id = intent.getIntExtra("User_ID", 0)
         checkuser_favorites(user_id)
     }
@@ -93,11 +97,49 @@ class MainActivity3 : AppCompatActivity() {
                             textDate.text = item.getString("date")
                             textTime.text = item.getString("time")
 
+                            favoriteButton.setOnClickListener {
+                                unfavorite_word(view, container)
+                            }
                             container.addView(view)
                         }
                     }
                 }
             }
+        })
+    }
+
+    fun unfavorite_word(current_view: View, container: LinearLayout) {
+
+        val current_frameID = current_view.findViewById<TextView>(R.id.FrameID)
+
+        val jsonBody = JSONObject()
+        jsonBody.put("current_frame_id", current_frameID.text.toString())
+
+        val requestBody = RequestBody.create(
+            "application/json; charset=utf-8".toMediaType(),
+            jsonBody.toString()
+        )
+
+        val request = Request.Builder()
+            .url("http://10.0.2.2:5000/delete-favorite")
+            .post(requestBody)
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                if (!response.isSuccessful) {
+                    println("Error: ${response.code}")
+                } else {
+                    runOnUiThread {
+                        container.removeView(current_view)
+                    }
+                }
+            }
+
         })
     }
 }

@@ -244,7 +244,7 @@ class MainActivity2 : AppCompatActivity() {
                             favorite_state = false
 
                             val jsonBody = JSONObject()
-                            jsonBody.put("current_favorite_id", current_favorite_id)
+                            jsonBody.put("current_frame_id", current_favorite_id)
 
                             val requestBody = RequestBody.create(
                                 "application/json; charset=utf-8".toMediaType(),
@@ -276,12 +276,12 @@ class MainActivity2 : AppCompatActivity() {
             }
         }
     }
-
     fun onTouch_navigation(button : ImageButton) {
         button.setOnClickListener {
             val buttonContent = button.contentDescription.toString()
             val intent : Intent = Intent(this@MainActivity2, MainActivity3::class.java)
             intent.putExtra("User_ID", user_id)
+            intent.putExtra("Username", username)
             when (buttonContent) {
                 "favorite" -> startActivity(intent)
             }

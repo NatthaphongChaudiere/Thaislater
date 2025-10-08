@@ -10,12 +10,12 @@
         android:id="@+id/lottieAnimationView"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:scaleType="center"
+        android:scaleType="fitCenter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:lottie_rawRes="@raw/loading_splash"
+        app:lottie_rawRes="@raw/loading_splash2"
         app:lottie_autoPlay="true"
         app:lottie_loop="true">
 
